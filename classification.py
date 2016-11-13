@@ -1,48 +1,30 @@
-from data import load_table
+import data
 
 import numpy as np
 from sklearn import tree
 from sklearn import metrics
-from sklearn.model_selection import KFold
+from sklearn import model_selection
 
-headers, table, labels = load_table("./classification_dataset_training.csv")
+headers, training_data, training_labels = data.load_training_data("./classification_dataset_training.csv")
 
+classifiers = list(map(lambda n: tree.DecisionTreeClassifier(max_depth=n), range(1, 50)))
 
-class KFoldCrossValidator(object):
-    def __init__(self,
-            classifier,
-            data=None,
-            labels=None,
-            cost=None,
-            fold_count=5):
-        self.data = data
-        self.new_classifier = classifier
-        self.fold_count = fold_count
-        self.cost = cost
-        self.labels = labels
-
-    def fit(self):
-        costs = []
-        kfold = KFold(n_splits=self.fold_count)
-        for train, validation in kfold.split(self.data):
-            training_data, training_labels = self.data[train], self.labels[train]
-            validation_data, validation_labels = self.data[validation], self.labels[validation]
-
-            classifier = self.new_classifier()
-            classifier.fit(training_data, training_labels)
-
-            predictions = classifier.predict_proba(validation_data)
-            cost = self.cost(validation_labels, predictions)
-
-            costs.append(cost)
-        return np.mean(costs)
+_, test_data = data.load_test_data("./classification_dataset_testing.csv")
+_, test_labels = data.load_test_labels("./classification_dataset_testing_solution.csv")
 
 
-validator = KFoldCrossValidator(
-        classifier=lambda: tree.DecisionTreeClassifier(max_depth=3),
-        data=table,
-        labels=labels,
-        cost=metrics.log_loss)
-mean_cost = validator.fit()
+cross_validation_scores = []
+for classifier in classifiers:
+    score = model_selection.cross_val_score(classifier, training_data, training_labels,
+            cv=model_selection.KFold(n_splits=5))
+    print(score)
+    cross_validation_scores.append(np.mean(score))
 
+
+best_classifier = classifiers[np.array(cross_validation_scores).argmax()]
+print("best classifier:", best_classifier)
+
+best_classifier.fit(training_data, training_labels)
+print("Test accuracy:", metrics.accuracy_score(best_classifier.predict(test_data), test_labels))
+import ipdb; ipdb.set_trace()
 
