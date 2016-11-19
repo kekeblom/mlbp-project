@@ -1,2 +1,7 @@
 __pycache__/
+*.aux
+*.blg
+*.log
+*.bll
+*.bbl
 

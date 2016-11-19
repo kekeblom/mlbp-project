@@ -9,7 +9,7 @@ from neural_net import optimizers
 from neural_net.cost import ClassificationCost
 from sklearn import metrics
 
-STOPPING_CRITERIA = 5
+STOPPING_CRITERIA = 15
 
 _, training_data, training_labels = data.load_training_data("./classification_dataset_training.csv")
 training_data = Dataset(

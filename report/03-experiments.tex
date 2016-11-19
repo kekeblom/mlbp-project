@@ -1,0 +1,21 @@
+
+In the experiments we studied two different tasks. Classifiying yelp reviews into two classes: those that received over 3 stars and those that didn't. In the regression task we try to predict how many people find the review useful.
+
+The datasets both consist of 50 different features for each datapoint. Each feature indicates how many occurences of a word where found in the review. The data consists of 5,000 training examples and 1000 test examples.
+
+\subsection{Classification}
+
+\subsubsection{The Neural Network}
+
+The neural network was trained by using stochastic gradient descent and the backpropagation algorithm to tune the weights and biases. The network is trained for an indefinite amount of training epochs until the validation set classification accuracy has not improved for 15 traininig epochs. The validation dataset is split off from the training data and it's size is 1/10th of all the available training data.
+
+For optimization, I implemented the RMSProp algorithm as presented in \cite{deep-learning-book}. Theano \cite{theano} was used to implement the computational graph and to derive the gradients.
+
+Since there are a vast amount of different hyperparameters available for tuning, I started with a simple model constructed using my best judgement and previous experience. A structured grid search could have been used but as the initial trial runs yielded very good results and due to a lack of time, I stuck to the humand guided heuristic search.
+
+\subsubsection{The Random Forests}
+
+K-fold cross validation \cite{alpaydin} was used to determine the best model parameters. I used a structured grid search to find the best possible parameters. The parameters that were tuned where the maximum depth of each individual tree and the minimum samples at leaf nodes. The number of trees trained for each ensemble was fixed to 100. The range of the values search was 1 to 10 with a step of 1 for the minimum amount of samples and 1 to 50 with a step of 3 for the maximum depth of the trees.
+
+\subsection{Regression}
+

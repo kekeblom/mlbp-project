@@ -1,0 +1,17 @@
+
+\subsection{Feedforward Neural Networks}
+Feedforward neural networks a classic deep learning model. They are called neural networks because they are formed by composing together different functions multiplying the input by matrices, possibly adding a bias temr and appliying activation functions. Each layers output is then passed to the next layer. The activation functions can be thought of as "neurons" and the matrices and biases as connections between them.
+
+Neural networks can be used to approximate functions. However, as opposed to linear models neural networks can not be trained by fitting them using a closed form optimization method. The way neural networks are trained is that we define some cost function as the optimization goal. We then minimize the cost function using gradient based learning. The backpropagation algorithm is used to update the weights and biases of the model. \cite{deep-learning-book}.
+
+In this paper we examine perhaps the most simple form of a feedforward neural network: a network with only fully connected layers. Fully connected layers are layers where the input is multiplied by a weight matrix, a bias term is added and the result is passed into some activtion function. Typical activation functions include sigmoid, tanh and restricted linear unit functions.
+
+Neural networks are very robust and work very well in high dimensional settings. They are however computationally expensive to train. They also have quite a lot of parameters that can be tuned. This makes finding the optimal parameters time consuming. Grid search or other similar techniques can however be used to help in the search \cite{deep-learning-book}.
+
+\subsection{Random Forests}
+
+Decision trees are a non parametric learning method. The hypothesis is represented using a binary tree where at each node we make a binary decision. For classification each leaf node represents the output class and for regression the labels for the training data are averaged to get the prediction. Decision trees are learned by recursively expanding the tree using one of many learning algorithms available. A good overview of learning decision trees is given in \cite{alpaydin}.
+
+Random forests are an averaging based ensemble method specifically designed for decision trees. \cite{sklearn} Several models are trained by sampling with replacement from the training set. The predictions of each model is then averaged to construct the final predictions. This way we can use several individual models with high variance and use averaging to reduce the overall variance. Decision trees typically can have high variance suffering from over fitting. They thus lend themselves very well for ensemble methods.
+
+
