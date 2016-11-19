@@ -14,11 +14,11 @@ def _read_table(filename):
 
 def load_training_data(filename):
     headers, table = _read_table(filename)
-    return headers, table[:, 0:-1], table[:, -1]
+    return headers, table[:, 1:-1], table[:, -1]
 
 def load_test_data(filename):
     headers, table = _read_table(filename)
-    return headers, table
+    return headers, table[:, 1:]
 
 def load_test_labels(filename):
     headers, labels = _read_table(filename)
