@@ -3,19 +3,18 @@ In the experiments we studied two different tasks. Classifiying yelp reviews int
 
 The datasets both consist of 50 different features for each datapoint. Each feature indicates how many occurences of a word where found in the review. The data consists of 5,000 training examples and 1000 test examples.
 
-\subsection{Classification}
-
 \subsubsection{The Neural Network}
 
 The neural network was trained by using stochastic gradient descent and the backpropagation algorithm to tune the weights and biases. The network is trained for an indefinite amount of training epochs until the validation set classification accuracy has not improved for 15 traininig epochs. The validation dataset is split off from the training data and it's size is 1/10th of all the available training data.
 
 For optimization, I implemented the RMSProp algorithm as presented in \cite{deep-learning-book}. Theano \cite{theano} was used to implement the computational graph and to derive the gradients.
 
-Since there are a vast amount of different hyperparameters available for tuning, I started with a simple model constructed using my best judgement and previous experience. A structured grid search could have been used but as the initial trial runs yielded very good results and due to a lack of time, I stuck to the humand guided heuristic search.
+Since there are a vast amount of different hyperparameters available for tuning, the model was tuned by hand. The networks where hand tuned and adjusted after each run. Different networks depths and widths where tried along with tanh, sigmoid and rectified linear unit activation functions. Several l2 norm regularization weights were tried.
 
 \subsubsection{The Random Forests}
 
-K-fold cross validation \cite{alpaydin} was used to determine the best model parameters. I used a structured grid search to find the best possible parameters. The parameters that were tuned where the maximum depth of each individual tree and the minimum samples at leaf nodes. The number of trees trained for each ensemble was fixed to 100. The range of the values search was 1 to 10 with a step of 1 for the minimum amount of samples and 1 to 50 with a step of 3 for the maximum depth of the trees.
+The scikit-learn \cite{sklearn} implementation of a random forest classifier was used. The classifier was tuned by running a grid search to find the best possible model parameters. The parameters that where tuned were the minimum samples left at a leaf of a tree and the maximum depth of each individual tree. The values for the minimum samples at a leaf node ranged from 1 to 10 with a step of 1. The values for the maximum depth ranged from 1 to 48 with a step of 3.
 
-\subsection{Regression}
+At each step of the search the model was evaluated using k-fold cross validation with 5 folds. The random forest that achieved the best k-fold validation accuracy was used.
+
 
