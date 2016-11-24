@@ -21,7 +21,7 @@ for min_samples in range(1, 10):
             regressors.append(ensemble.RandomForestRegressor(
                 min_samples_leaf=min_samples,
                 max_depth=max_depth,
-                n_estimators=50))
+                n_estimators=100))
 
 cross_validation_scores = []
 for regressor in regressors:

@@ -7,11 +7,13 @@ class FullyConnected(object):
         self.input_dimensions = input_dimensions
         self.output_dimensions = output_dimensions
 
-        weights = np.asarray(np.random.normal(loc=0.0, scale=0.5, size=(input_dimensions, output_dimensions)), dtype=theano.config.floatX)
+        initial_weights = np.random.normal(loc=0.0, scale=0.25, size=(input_dimensions, output_dimensions))
 
         biases = np.zeros((output_dimensions), dtype=theano.config.floatX)
 
-        self.weights = theano.shared(value=weights, name='W', borrow=True)
+        self.weights = theano.shared(
+                value=initial_weights.astype(theano.config.floatX),
+                name='W', borrow=True)
         self.biases = theano.shared(value=biases, name='b', borrow=True)
         self.activation = activation
 

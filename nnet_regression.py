@@ -31,7 +31,7 @@ class RegularizedCost(object):
     def get_function(self):
         weights = np.concatenate([np.asarray(m).reshape(-1) for m in self.model.get_weights()])
         l2_norm = (weights ** 2).sum()
-        l2_weight = 1.0
+        l2_weight = 0.5
         return T.mean((self.y - T.sum(self.output, axis=1)) ** 2) + l2_weight * l2_norm
 
 def score(model, dataset):
@@ -55,25 +55,20 @@ class NNetRegressor(object):
             output_dimensions=19,
             activation=T.nnet.relu))
 
-        model.add(FullyConnected(
-            input_dimensions=19,
-            output_dimensions=10,
-            activation=T.nnet.relu))
 
         model.compile()
         return model
 
     def predict(self, dataset):
         predictions = self.model.predict(dataset).sum(axis=1)
-        # Round the predictions as we are regressing to integers.
-        return np.round(predictions)
+        return predictions
 
     def fit(self, training_data):
         best_mean_squared_error = 99999.0
         epoch = 0
         epochs_without_improvement = 0
         costs_on_training = []
-        while 1:
+        while True:
             epoch += 1
 
             print("Epoch", epoch)
@@ -101,8 +96,19 @@ class NNetRegressor(object):
 regressor = NNetRegressor()
 regressor.fit(training_data)
 
-import ipdb; ipdb.set_trace()
 mean_squared_error = score(regressor, test_data)
 
 print("Mean squared error: ", mean_squared_error)
+
+results = [['ID', 'vote']]
+test_predictions = regressor.predict(test_data.x)
+
+for i in range(0, 1000):
+    results.append([str(int(5001.0 + i)), str(test_predictions[i])])
+
+import csv
+with open("regression_solution.csv", 'w') as f:
+    writer = csv.writer(f)
+    writer.writerows(results)
+
 
