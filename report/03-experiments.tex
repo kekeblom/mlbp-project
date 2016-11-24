@@ -3,17 +3,21 @@ In the experiments we studied two different tasks. Classifiying yelp reviews int
 
 The datasets both consist of 50 different features for each datapoint. Each feature indicates how many occurences of a word where found in the review text. The data consists of 5,000 training examples and a disjoint test set of 1,000 test examples.
 
-\subsubsection{The Neural Network}
+\subsection{The Neural Network}
 
 The neural network was trained by using stochastic gradient descent and the backpropagation algorithm to tune the weights and biases. The validation dataset is split off from the training data and it's size is 1/10th of all the available training data.
 
-For optimization the RMSProp algorithm was implemented as presented in \cite{deep-learning-book}. Theano \cite{theano} was used to implement the computational graph and to derive the gradients. We used mean squared error as a cost function to minimize the error in our network.
+For optimization the RMSProp algorithm was implemented as presented in \cite{deep-learning-book}. Theano \cite{theano} was used to implement the computational graph and to derive the gradients.
+
+For the regression task we used mean squared error as a cost function to minimize the error in our network. For the classification task categorical cross entropy was used.
 
 The network was trained until the classification accuracy no longer improved on the validation set for more than 5 passes over the training dataset. The network was then evaluated on the test dataset and the test accuracy logged.
 
-Since there is a vast amount of different hyperparameters available for tuning, the model was tuned by hand. The network parameters were adjusted after each run. Different networks depths and widths where tried along with tanh, sigmoid and rectified linear unit activation functions. Several l2 norm regularization weights were tried. The learning rate was adjusted.
+Since there is a vast amount of different hyperparameters available for tuning, the model was tuned by hand. The network parameters were adjusted after each run. Different networks depths and widths where tried along with tanh, sigmoid and rectified linear unit activation functions. Several l2 norm regularization weights were tried. Many different learning rates ranging from 0.1 to 0.0001 were tried.
 
-\subsubsection{The Random Forests}
+The full implementation of the neural network can be found on github at \hyperref{https://github.com/kekeblom/mlbp-project}. The implementation of the RMSProp algorithm is included in appendice A \ref{appendix-a}.
+
+\subsection{The Random Forests}
 
 
 For both tasks the models were tuned by running a grid search to find the best possible model parameters. The parameters that where tuned were the minimum samples left at a leaf of a tree and the maximum depth of each individual tree. The values for the minimum samples at a leaf node ranged from 1 to 10 with a step of 1. The values for the maximum depth ranged from 1 to 48 with a step of 3.
