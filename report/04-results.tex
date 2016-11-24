@@ -1,10 +1,31 @@
 
-\subsection{The Classification Task}
+The results for the classification experiments can be seen in table \ref{tab:classification-results} and the results for the regression task in \ref{tab:regression-results}.
 
-\subsubsection{The Neural Network}
+\begin{table}[H]
+  \centering
+  \begin{tabular*}{0.48\textwidth}{c|c}
+    \textbf{Method} & \textbf{Accuracy [\%]} \\
+    \midrule
+    Neural Network & 72.0 \\
+    Random Forest & 71.4 \\
+  \end{tabular*}
+  \label{tab:classification-results}
+  \caption{Results for the classification task}
+\end{table}
 
-\subsubsection{The Random Forest}
+\begin{table}[H]
+  \centering
+  \begin{tabular*}{0.48\textwidth}{c|c}
+    \textbf{Method} & \textbf{Mean squared error} \\
+    \midrule
+    Neural Network & 0.043 \\
+    Random Forest & 0.129 \\
+  \end{tabular*}
+  \label{tab:regression-results}
+  \caption{Results for the regression task}
+\end{table}
 
+In the classification task the neural network achieved 72.0\% classification accuracy on the test set with 19 hidden neurons with sigmoid activation functions and 2 softmax output units. The learning rate was set to 0.001 and the regularization weight to 1.0. The random forest achieved 71.4\% test accuracy with 100 estimators, the maximum depth set to 40 and the minimum samples at a leaf node set to 100 estimators.
 
+In the regression task the neural network achieved a mean squared error of 0.043 on the test set using 19 hidden neurons, 10 output neurons, rectified linear units at both layers and a learning rate of 0.0005. The l2 regularization weight was set to 0.5. The random forest achieved a mean squared error of 0.129 with a maximum tree depth of 49 and with 1 minimum of samples at a leaf node.
 
-\subsection{The Regression Task}

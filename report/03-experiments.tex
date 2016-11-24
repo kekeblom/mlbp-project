@@ -1,20 +1,25 @@
 
 In the experiments we studied two different tasks. Classifiying yelp reviews into two classes: those that received over 3 stars and those that didn't. In the regression task we try to predict how many people find the review useful.
 
-The datasets both consist of 50 different features for each datapoint. Each feature indicates how many occurences of a word where found in the review. The data consists of 5,000 training examples and 1000 test examples.
+The datasets both consist of 50 different features for each datapoint. Each feature indicates how many occurences of a word where found in the review text. The data consists of 5,000 training examples and a disjoint test set of 1,000 test examples.
 
 \subsubsection{The Neural Network}
 
-The neural network was trained by using stochastic gradient descent and the backpropagation algorithm to tune the weights and biases. The network is trained for an indefinite amount of training epochs until the validation set classification accuracy has not improved for 15 traininig epochs. The validation dataset is split off from the training data and it's size is 1/10th of all the available training data.
+The neural network was trained by using stochastic gradient descent and the backpropagation algorithm to tune the weights and biases. The validation dataset is split off from the training data and it's size is 1/10th of all the available training data.
 
-For optimization, I implemented the RMSProp algorithm as presented in \cite{deep-learning-book}. Theano \cite{theano} was used to implement the computational graph and to derive the gradients.
+For optimization the RMSProp algorithm was implemented as presented in \cite{deep-learning-book}. Theano \cite{theano} was used to implement the computational graph and to derive the gradients. We used mean squared error as a cost function to minimize the error in our network.
 
-Since there are a vast amount of different hyperparameters available for tuning, the model was tuned by hand. The networks where hand tuned and adjusted after each run. Different networks depths and widths where tried along with tanh, sigmoid and rectified linear unit activation functions. Several l2 norm regularization weights were tried.
+The network was trained until the classification accuracy no longer improved on the validation set for more than 5 passes over the training dataset. The network was then evaluated on the test dataset and the test accuracy logged.
+
+Since there is a vast amount of different hyperparameters available for tuning, the model was tuned by hand. The network parameters were adjusted after each run. Different networks depths and widths where tried along with tanh, sigmoid and rectified linear unit activation functions. Several l2 norm regularization weights were tried. The learning rate was adjusted.
 
 \subsubsection{The Random Forests}
 
-The scikit-learn \cite{sklearn} implementation of a random forest classifier was used. The classifier was tuned by running a grid search to find the best possible model parameters. The parameters that where tuned were the minimum samples left at a leaf of a tree and the maximum depth of each individual tree. The values for the minimum samples at a leaf node ranged from 1 to 10 with a step of 1. The values for the maximum depth ranged from 1 to 48 with a step of 3.
 
-At each step of the search the model was evaluated using k-fold cross validation with 5 folds. The random forest that achieved the best k-fold validation accuracy was used.
+For both tasks the models were tuned by running a grid search to find the best possible model parameters. The parameters that where tuned were the minimum samples left at a leaf of a tree and the maximum depth of each individual tree. The values for the minimum samples at a leaf node ranged from 1 to 10 with a step of 1. The values for the maximum depth ranged from 1 to 48 with a step of 3.
+
+In our experiments we used the scikit-learn random forest implementation \cite{sklearn}. The k-fold cross-validation implementation was also from the scikit-learn library.
+
+At each step of the search, the model was evaluated using k-fold cross validation with 5 folds. The random forest that achieved the best k-fold validation accuracy was used to evaluate the model on the test dataset.
 
 
