@@ -1,10 +1,13 @@
 
-We found that random forests and neural networks achieve similar performance on a small, relatively high dimensional dataset such as the one used in this paper. The neural network performed slightly better on both tasks. The neural network turned out to perform much better on both tasks.
+We found that random forests and neural networks achieve similar performance on a small, relatively high dimensional dataset such as the one used in this paper. The neural network performed slightly better on both tasks. The neural network turned out to perform slightly better on both tasks.
 
-Despite the fact that the neural network achieved good results on both tasks, random forests might still be a better option in many cases. Random forests are much easier to use and a well perfoming model can be found very quickly. Random forests are computationally faster to train which means that more variations can be tried quicker.
+Despite the fact that the neural network achieved good results on both tasks, random forests might still be a better option in many cases. Random forests turned out to be much easier to use and a well perfoming model was found very quickly. Random forests are computationally faster to train which means that more variations could be tried faster.
 
 Different options for the count of the random forest estimators in the models were not tried. This could be an interesting experiment to run to see wether better results could be achieved by adding more estimators. Other parameters could also have been included in the search, such as the maximum number of samples at a leaf node or different node splitting criteria. Some feature selection scheme could have been tried as decision trees are known to not perform very well in high dimensional settings as they use a heuristic search for growing the tree to fit the dataset.
 
+Some metrics could have been measured such as how long it takes to evaluate the trained model. This could be an interesting comparison as it could be critical for some applications.
+
 Better results and less biased results could have been achieved using a grid search for finding the neural network parameters, but since there were so many parameters to be tuned and a lack of time, the decision was made to hand tune the parameters.
 
+Implementing the neural network model and conducting both experiments was a good way to learn more about the ergonomics and performance characteristics of these machine learning methods.
 
